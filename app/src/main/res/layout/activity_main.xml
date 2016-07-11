@@ -30,8 +30,20 @@
                 android:id="@+id/profile_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/minions"
+                android:background="@mipmap/credit"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="?attr/actionBarSize"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hyun ji Kukeu"
+                android:textSize="20sp"
+                android:layout_marginLeft="210dp"
+                android:layout_marginTop="100dp"/>
+
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -41,6 +53,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<KukeuPerson> kukeuPersonList;
     private PersonListAdapter personListAdapter;
-    //private RecyclerView vRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        //vRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-
         kukeuPersonList = new ArrayList<>();
-
 
         kukeuPersonList.add(new KukeuPerson());
         kukeuPersonList.add(new KukeuPerson());
@@ -67,25 +64,7 @@ public class MainActivity extends AppCompatActivity {
         vRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
-       personListAdapter.notifyDataSetChanged();
-
-
-
-//        vRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-//        persons = new ArrayList<>();
-//
-//        persons.add(new Person());
-//        persons.add(new Person());
-//        persons.add(new Person());
-//        persons.add(new Person());
-//        persons.add(new Person());
-//        persons.add(new Person());
-//
-//
-//        personListAdapter = new PersonListAdapter(persons);
-//        vRecyclerView.setAdapter(personListAdapter);
-//
-//        vRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        personListAdapter.notifyDataSetChanged();
 
     }
 
