@@ -11,7 +11,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@mipmap/minions" />
+        android:background="@drawable/minions" />
 
     <LinearLayout
         android:id="@+id/text_layout"

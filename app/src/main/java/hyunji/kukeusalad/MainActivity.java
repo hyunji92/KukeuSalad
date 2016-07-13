@@ -13,6 +13,11 @@ import java.util.List;
 import adapter.PersonListAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import vo.KukeuPerson;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,12 +35,21 @@ public class MainActivity extends AppCompatActivity {
     private List<KukeuPerson> kukeuPersonList;
     private PersonListAdapter personListAdapter;
 
+    Realm realm = Realm.getDefaultInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
+        RealmResults<KukeuPerson> persons = realm.where(KukeuPerson.class).findAll();
+        KukeuPerson person = persons.first();
+
+        Observable<Realm> realmObservable = realm.asObservable();
+        Observable<RealmResults<KukeuPerson>> resultsObservable = persons.asObservable();
+        Observable<KukeuPerson> objectObservable = KukeuPerson.asObservable();
 
         kukeuPersonList = new ArrayList<>();
 
@@ -50,6 +64,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void realmTest(){
+
+        realm.where(KukeuPerson.class).equalTo("name", "John").findAllAsync().asObservable()
+                .filter(new Func1<RealmResults<KukeuPerson>, Boolean>() {
+                    @Override
+                    public Boolean call(RealmResults<KukeuPerson> persons) {
+                        // Ignore unloaded results
+                        return persons.isLoaded();
+                    }
+                })
+                .subscribe(new Action1<RealmResults<KukeuPerson>>() {
+                    @Override
+                    public void call(RealmResults<KukeuPerson> persons) {
+                        // Show persons...
+                    }
+                });
     }
 
 }
