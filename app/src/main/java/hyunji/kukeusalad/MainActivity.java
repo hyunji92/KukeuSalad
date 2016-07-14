@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         Observable<Realm> realmObservable = realm.asObservable();
         Observable<RealmResults<KukeuPerson>> resultsObservable = persons.asObservable();
-        Observable<KukeuPerson> objectObservable = KukeuPerson.asObservable();
+        // ???  Observable<KukeuPerson> objectObservable = KukeuPerson.asObservable();
 
         kukeuPersonList = new ArrayList<>();
 
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         personListAdapter = new PersonListAdapter(kukeuPersonList);
         vRecyclerView.setAdapter(personListAdapter);
         vRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
 
 
     }
