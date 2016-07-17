@@ -17,7 +17,7 @@
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginBottom="80dp"
             app:expandedTitleMarginStart="220dp"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <ImageView
                 android:id="@+id/profile_img"

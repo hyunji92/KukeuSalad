@@ -3,14 +3,13 @@ package hyunji.kukeusalad.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.drawer_layout)
     DrawerLayout vDrawerLyout;
 
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, vDrawerLyout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         vDrawerLyout.setDrawerListener(toggle);
         toggle.syncState();
-
-        vToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (vDrawerLyout.isDrawerOpen(Gravity.LEFT)) {
-                    vDrawerLyout.closeDrawer(Gravity.LEFT);
-                } else {
-                    vDrawerLyout.openDrawer(Gravity.LEFT);
-                }
-            }
-        });
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -62,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (vDrawerLyout.isDrawerOpen(Gravity.LEFT)) {
-            vDrawerLyout.closeDrawer(Gravity.LEFT);
+        if (vDrawerLyout.isDrawerOpen(GravityCompat.START)) {
+            vDrawerLyout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -96,21 +84,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {// Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id) {
 
-        } else if (id == R.id.nav_slideshow) {
+            case R.id.nav_camera:
+                break;
+            case R.id.nav_gallery:
+                break;
+            case R.id.nav_slideshow:
+                break;
+            case R.id.nav_manage:
+                break;
+            case R.id.nav_share:
+                break;
+            case R.id.nav_send:
+                break;
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            default:
         }
 
-        vDrawerLyout.closeDrawer(Gravity.LEFT);
+
+        vDrawerLyout.closeDrawer(GravityCompat.START);
         return true;
     }
 }

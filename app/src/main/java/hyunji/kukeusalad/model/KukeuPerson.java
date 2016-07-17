@@ -13,9 +13,4 @@ public class KukeuPerson extends RealmObject {
     public String job;
     public String gender;
 
-
-    //public Observable<KukeuPerson> asObservable() {
-
-    //    return null;
-    //}
 }
