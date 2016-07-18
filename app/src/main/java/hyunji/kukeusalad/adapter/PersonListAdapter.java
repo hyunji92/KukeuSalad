@@ -4,15 +4,18 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
 import hyunji.kukeusalad.view.HeaderItemView;
 import hyunji.kukeusalad.view.ListItemBoyView;
 import hyunji.kukeusalad.view.ListItemView;
 import hyunji.kukeusalad.view.MiddleItemView;
+import io.realm.Realm;
 
 /**
  * Created by hyunji on 16. 7. 10..
@@ -22,6 +25,9 @@ import hyunji.kukeusalad.view.MiddleItemView;
 public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<KukeuPerson> kukeuPersonList = new ArrayList<>();
+    private Realm realm;
+
+    private boolean showMiddle;
 
     public final int VIEW_TYPE_GIRL = 0;
     public final int VIEW_TYPE_BOY = 1;
@@ -37,8 +43,12 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private static ClickListener clickListener;
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        realm = Realm.getDefaultInstance();
+
         if (viewType == VIEW_TYPE_GIRL) {
             return new GirlViewHolder(new ListItemView(context));
         } else if (viewType == VIEW_TYPE_BOY) {
@@ -61,28 +71,44 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (viewType) {
             case VIEW_TYPE_GIRL:
                 ((GirlViewHolder) holder).listItemView.setData(kukeuPersonList.get(position));
+
+                ((GirlViewHolder) holder).girlBtn.setOnClickListener(v -> {
+                    //do button click work here
+                    long id = kukeuPersonList.get(position).getId();
+                    KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+
+                    realm.executeTransaction(realm1 -> {
+                        // 하나의 객체를 삭제합니다
+                        kukeuPerson.deleteFromRealm();
+                    });
+                });
+
                 break;
             case VIEW_TYPE_BOY:
                 ((BoyViewHolder) holder).listItemBoyView.setData(kukeuPersonList.get(position));
                 break;
-            //case VIEW_TYPE_HEADER:
-            //    ((HeadertemView) holder).h
         }
+
+
     }
 
 
     @Override
     public int getItemViewType(int position) {
 
-        if (position == 0) {
-            return VIEW_TYPE_HEADER;
-        } else if (position > 0 && position <= 14) {
-            return VIEW_TYPE_GIRL;
-        } else if (position == 15) {
+        if ("".equals(kukeuPersonList.get(position).getName())) {
+            if (!showMiddle) {
+                showMiddle = true;
+                return VIEW_TYPE_HEADER;
+            }
+
             return VIEW_TYPE_MIDDLE;
-        } else {
-            return VIEW_TYPE_BOY;
         }
+        if ("girl".equals(kukeuPersonList.get(position).getGender())) {
+            return VIEW_TYPE_GIRL;
+        }
+
+        return VIEW_TYPE_BOY;
 
     }
 
@@ -112,18 +138,25 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public class GirlViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ListItemView listItemView;
 
+        //@BindView(R.id.girl_btn)
+        Button girlBtn;
+
         public GirlViewHolder(View itemView) {
             super(itemView);
             listItemView = (ListItemView) itemView;
             listItemView.setOnClickListener(this);
+            girlBtn = (Button) itemView.findViewById(R.id.girl_btn);
             //itemView.setOnLongClickListener(this);
 
         }
+
         @Override
         public void onClick(View v) {
             clickListener.onItemClick(getAdapterPosition(), v);
         }
     }
+
+
     public void setOnItemClickListener(ClickListener clickListener) {
         PersonListAdapter.clickListener = clickListener;
     }
