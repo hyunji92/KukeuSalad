@@ -55,12 +55,7 @@ public class MainFragment extends Fragment {
         //RealmConfiguration mRealmConfig = new RealmConfiguration.Builder(context).build();
         //Realm.setDefaultConfiguration(mRealmConfig);
 
-        adapter.setOnItemClickListener(new PersonListAdapter.ClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Log.d("TEST", "onItemClick position: " + position);
-            }
-        });
+        adapter.setOnItemClickListener((position, v) -> Log.d("TEST", "onItemClick position: " + position));
 
         realm = Realm.getDefaultInstance();
 

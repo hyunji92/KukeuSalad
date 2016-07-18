@@ -114,14 +114,14 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public GirlViewHolder(View itemView) {
             super(itemView);
-
-            itemView.setOnClickListener(this);
-            //itemView.setOnLongClickListener(this);
             listItemView = (ListItemView) itemView;
+            listItemView.setOnClickListener(this);
+            //itemView.setOnLongClickListener(this);
+
         }
         @Override
         public void onClick(View v) {
-
+            clickListener.onItemClick(getAdapterPosition(), v);
         }
     }
     public void setOnItemClickListener(ClickListener clickListener) {
