@@ -55,6 +55,13 @@ public class MainFragment extends Fragment {
         //RealmConfiguration mRealmConfig = new RealmConfiguration.Builder(context).build();
         //Realm.setDefaultConfiguration(mRealmConfig);
 
+        adapter.setOnItemClickListener(new PersonListAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.d("TEST", "onItemClick position: " + position);
+            }
+        });
+
         realm = Realm.getDefaultInstance();
 
         Observable<RealmResults<KukeuPerson>> realmResults = realm.where(KukeuPerson.class).findAllAsync().asObservable();
@@ -72,6 +79,8 @@ public class MainFragment extends Fragment {
 
         return view;
     }
+
+
 
     public void dummy() {
         // data 들어간 작업

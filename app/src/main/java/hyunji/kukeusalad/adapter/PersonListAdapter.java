@@ -35,6 +35,8 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.context = context;
     }
 
+    private static ClickListener clickListener;
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_GIRL) {
@@ -106,14 +108,29 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public class GirlViewHolder extends RecyclerView.ViewHolder {
+
+    public class GirlViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ListItemView listItemView;
 
         public GirlViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
+            //itemView.setOnLongClickListener(this);
             listItemView = (ListItemView) itemView;
         }
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+    public void setOnItemClickListener(ClickListener clickListener) {
+        PersonListAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+
     }
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
