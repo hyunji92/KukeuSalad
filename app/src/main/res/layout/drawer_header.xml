@@ -4,52 +4,58 @@
     android:layout_height="192dp">
 
     <ImageView
+        android:id="@+id/navi_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@color/colorPrimary" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/girl_2" />
+        android:id="@+id/imageView"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/credit" />
 
     <LinearLayout
         android:id="@+id/user_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
+        android:layout_alignStart="@+id/major"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/major"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="정현지 HyunDeee"
-            android:textColor="#000000"
-            android:textSize="14sp" />
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/std_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="6dp"
-                android:text="Android Developer"
-                android:textColor="#000000"
-                android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/user_layout"
+        android:layout_marginStart="31dp"
+        android:layout_toEndOf="@+id/imageView"
+        android:text="정현지 HyunDeee"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/std_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/major"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="6dp"
+        android:text="Android Developer"
+        android:textColor="#000000"
+        android:textSize="14sp" />
 
 </RelativeLayout>

@@ -2,13 +2,17 @@ package hyunji.kukeusalad.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
 import hyunji.kukeusalad.view.HeaderItemView;
@@ -27,7 +31,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<KukeuPerson> kukeuPersonList = new ArrayList<>();
     private Realm realm;
 
-    private boolean showMiddle;
+    private boolean showMiddle = false;
 
     public final int VIEW_TYPE_GIRL = 0;
     public final int VIEW_TYPE_BOY = 1;
@@ -42,7 +46,6 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private static ClickListener clickListener;
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -82,27 +85,39 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         kukeuPerson.deleteFromRealm();
                     });
                 });
+                //((GirlViewHolder) holder).girlImg.set
 
                 break;
             case VIEW_TYPE_BOY:
                 ((BoyViewHolder) holder).listItemBoyView.setData(kukeuPersonList.get(position));
+                ((BoyViewHolder) holder).boyBtn.setOnClickListener(v -> {
+
+                    //do button click work here
+                    long id = kukeuPersonList.get(position).getId();
+                    KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+
+                    realm.executeTransaction(realm1 -> {
+                        // 하나의 객체를 삭제합니다
+                        kukeuPerson.deleteFromRealm();
+                    });
+                });
+
                 break;
         }
-
-
     }
-
 
     @Override
     public int getItemViewType(int position) {
 
+        Log.d("HeaderView", "getItemViewType: " + showMiddle);
         if ("".equals(kukeuPersonList.get(position).getName())) {
-            if (!showMiddle) {
-                showMiddle = true;
-                return VIEW_TYPE_HEADER;
-            }
 
-            return VIEW_TYPE_MIDDLE;
+                return VIEW_TYPE_HEADER;
+////            } else {
+////                return VIEW_TYPE_MIDDLE;
+//            }
+
+
         }
         if ("girl".equals(kukeuPersonList.get(position).getGender())) {
             return VIEW_TYPE_GIRL;
@@ -124,13 +139,25 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public class BoyViewHolder extends RecyclerView.ViewHolder {
+    public class BoyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ListItemBoyView listItemBoyView;
+        @BindView(R.id.boy_btn)
+        Button boyBtn;
+
+        @BindView(R.id.boy_img)
+        ImageView boyImg;
 
         public BoyViewHolder(View itemView) {
             super(itemView);
-            listItemBoyView = (ListItemBoyView) itemView;
+            ButterKnife.bind(this, itemView);
 
+            listItemBoyView = (ListItemBoyView) itemView;
+            listItemBoyView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(), v);
         }
     }
 
@@ -138,15 +165,18 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public class GirlViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ListItemView listItemView;
 
-        //@BindView(R.id.girl_btn)
+        @BindView(R.id.girl_btn)
         Button girlBtn;
+
+        @BindView(R.id.girl_img)
+        ImageView girlImg;
 
         public GirlViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+
             listItemView = (ListItemView) itemView;
             listItemView.setOnClickListener(this);
-            girlBtn = (Button) itemView.findViewById(R.id.girl_btn);
-            //itemView.setOnLongClickListener(this);
 
         }
 

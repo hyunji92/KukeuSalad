@@ -6,7 +6,7 @@
 
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/girl_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/icon"
+        android:layout_toEndOf="@+id/girl_img"
         android:orientation="vertical"
         android:padding="15dp">
 

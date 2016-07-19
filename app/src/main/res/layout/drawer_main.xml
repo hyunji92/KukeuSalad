@@ -18,16 +18,7 @@
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginBottom="80dp"
             app:expandedTitleMarginStart="220dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:id="@+id/profile_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:background="@drawable/credit"
-                app:layout_collapseMode="parallax" />
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
