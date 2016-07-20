@@ -21,7 +21,7 @@ import hyunji.kukeusalad.view.ListItemView;
 import io.realm.Realm;
 
 /**
- * Created by hyunji on 16. 7. 10..
+ * Created by hyunji
  */
 
 
@@ -38,6 +38,8 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public final int VIEW_TYPE_HEADER = 2;
     public final int VIEW_TYPE_MIDDLE = 3;
 
+    int[] girlImgs = new int[] {R.drawable.girl_1, R.drawable.girl_2, R.drawable.girl_3, R.drawable.girl_4 ,R.drawable.girl_5};
+    int[] boyImgs = new int[] {R.drawable.boy_1, R.drawable.boy_2, R.drawable.boy_3, R.drawable.boy_4 ,R.drawable.boy_5};
 
     private Context context;
 
@@ -81,7 +83,6 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case VIEW_TYPE_GIRL:
                 ((GirlViewHolder) holder).listItemView.setData(kukeuPersonList.get(position - 1));
-
                 ((GirlViewHolder) holder).girlBtn.setOnClickListener(v -> {
                     //do button click work here
                     long id = kukeuPersonList.get(position - 1).getId();
@@ -94,7 +95,8 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         boyHeaderNum = realm1.where(KukeuPerson.class).equalTo("gender", "girl").findAll().size() + 1;
                     });
                 });
-                //((GirlViewHolder) holder).girlImg.set
+                int girlImgId = (int)(Math.random() * girlImgs.length);
+                ((GirlViewHolder) holder).girlImg.setBackgroundResource(girlImgs[girlImgId]);
 
                 break;
             case VIEW_TYPE_BOY:
@@ -110,6 +112,8 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         kukeuPerson.deleteFromRealm();
                     });
                 });
+                int boyImgId = (int)(Math.random() * boyImgs.length);
+                ((BoyViewHolder) holder).boyImg.setBackgroundResource(boyImgs[boyImgId]);
 
                 break;
         }

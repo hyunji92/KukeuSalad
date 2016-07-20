@@ -13,7 +13,7 @@ import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
 
 /**
- * Created by hyunji on 16. 7. 16..
+ * Created by hyunji
  */
 public class ListItemBoyView extends FrameLayout {
 
@@ -45,7 +45,6 @@ public class ListItemBoyView extends FrameLayout {
     public void setData(KukeuPerson data) {
 
         if (data != null) {
-
             name.setText(data.getName());
             job.setText(data.getJob());
             gender.setText(data.getGender());

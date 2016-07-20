@@ -13,7 +13,7 @@ import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
 
 /**
- * Created by hyunji on 16. 7. 16..
+ * Created by hyunji
  */
 public class ListItemView extends FrameLayout {
     @BindView(R.id.t_name)

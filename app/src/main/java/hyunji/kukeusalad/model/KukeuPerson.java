@@ -5,7 +5,7 @@ import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 
 /**
- * Created by hyunji on 16. 7. 10..
+ * Created by hyunji
  */
 @Data
 public class KukeuPerson extends RealmObject {

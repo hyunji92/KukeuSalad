@@ -25,7 +25,7 @@ import io.realm.Sort;
 import rx.Observable;
 
 /**
- * Created by hyunji on 16. 7. 16..
+ * Created by hyunji
  */
 public class MainFragment extends Fragment {
     private final String[] nameList = {"정현지", "최현묵", "정고은", "이윤정", "이예진", "진유림", "김나연", "정지윤", "진아", "백설아", "순자", "미자", "혜자", "영자", "은자", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산2"};
@@ -77,7 +77,6 @@ public class MainFragment extends Fragment {
                 .filter(RealmResults::isLoaded)
                 .subscribe(results1 -> {
                     Log.d("TEST", "onCreate: " + results1.size());
-                    Log.v("DATA", "onCreate: " + results1.toString());
                     adapter.setData(results1);
                 });
 
