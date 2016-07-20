@@ -11,7 +11,7 @@
         android:src="@color/colorPrimary" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_view"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_centerVertical="true"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/user_layout"
         android:layout_marginStart="31dp"
-        android:layout_toEndOf="@+id/imageView"
+        android:layout_toEndOf="@+id/image_view"
         android:text="정현지 HyunDeee"
         android:textColor="#000000"
         android:textSize="14sp" />

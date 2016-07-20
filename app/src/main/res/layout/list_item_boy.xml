@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground">
 
     <Button
         android:id="@+id/boy_btn"
@@ -11,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:foreground="?attr/selectableItemBackground"
         android:text="삭제"/>
 
 
@@ -23,8 +25,8 @@
         android:layout_alignParentEnd="true">
         <ImageView
             android:id="@+id/boy_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"

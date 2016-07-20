@@ -9,4 +9,10 @@
 
     </style>
 
+    <!-- Base application theme. -->
+    <style name="AppThemeAdd" parent="Theme.AppCompat">
+        <item name="selectableItemBackgroundCompat">@android:drawable/list_selector_background</item>
+    </style>
+
+
 </resources>

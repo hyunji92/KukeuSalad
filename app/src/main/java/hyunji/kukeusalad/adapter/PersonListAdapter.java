@@ -2,11 +2,12 @@ package hyunji.kukeusalad.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
-import hyunji.kukeusalad.view.HeaderItemView;
 import hyunji.kukeusalad.view.ListItemBoyView;
 import hyunji.kukeusalad.view.ListItemView;
-import hyunji.kukeusalad.view.MiddleItemView;
 import io.realm.Realm;
 
 /**
@@ -29,9 +28,10 @@ import io.realm.Realm;
 public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<KukeuPerson> kukeuPersonList = new ArrayList<>();
+
     private Realm realm;
 
-    private boolean showMiddle = false;
+    private int boyHeaderNum = -1;
 
     public final int VIEW_TYPE_GIRL = 0;
     public final int VIEW_TYPE_BOY = 1;
@@ -42,6 +42,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context context;
 
     public PersonListAdapter(Context context) {
+
         this.context = context;
     }
 
@@ -57,9 +58,11 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else if (viewType == VIEW_TYPE_BOY) {
             return new BoyViewHolder(new ListItemBoyView(context));
         } else if (viewType == VIEW_TYPE_HEADER) {
-            return new HeaderViewHolder(new HeaderItemView(context));
+            View v = LayoutInflater.from(context).inflate(R.layout.list_header, parent, false);
+            return new GirlViewHeader(v);
         } else if (viewType == VIEW_TYPE_MIDDLE) {
-            return new MiddleViewHolder(new MiddleItemView(context));
+            View v = LayoutInflater.from(context).inflate(R.layout.list_middle, parent, false);
+            return new BoyViewHeader(v);
         } else {
             return new GirlViewHolder(new ListItemView(context));
         }
@@ -72,28 +75,34 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int viewType = getItemViewType(position);
 
         switch (viewType) {
+            case VIEW_TYPE_HEADER:
+
+
+                break;
             case VIEW_TYPE_GIRL:
-                ((GirlViewHolder) holder).listItemView.setData(kukeuPersonList.get(position));
+                ((GirlViewHolder) holder).listItemView.setData(kukeuPersonList.get(position - 1));
 
                 ((GirlViewHolder) holder).girlBtn.setOnClickListener(v -> {
                     //do button click work here
-                    long id = kukeuPersonList.get(position).getId();
+                    long id = kukeuPersonList.get(position - 1).getId();
                     KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
 
                     realm.executeTransaction(realm1 -> {
                         // 하나의 객체를 삭제합니다
+
                         kukeuPerson.deleteFromRealm();
+                        boyHeaderNum = realm1.where(KukeuPerson.class).equalTo("gender", "girl").findAll().size() + 1;
                     });
                 });
                 //((GirlViewHolder) holder).girlImg.set
 
                 break;
             case VIEW_TYPE_BOY:
-                ((BoyViewHolder) holder).listItemBoyView.setData(kukeuPersonList.get(position));
+                ((BoyViewHolder) holder).listItemBoyView.setData(kukeuPersonList.get(position - 2));
                 ((BoyViewHolder) holder).boyBtn.setOnClickListener(v -> {
 
                     //do button click work here
-                    long id = kukeuPersonList.get(position).getId();
+                    long id = kukeuPersonList.get(position - 2).getId();
                     KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
 
                     realm.executeTransaction(realm1 -> {
@@ -109,18 +118,22 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemViewType(int position) {
 
-        Log.d("HeaderView", "getItemViewType: " + showMiddle);
-        if ("".equals(kukeuPersonList.get(position).getName())) {
 
-                return VIEW_TYPE_HEADER;
-////            } else {
-////                return VIEW_TYPE_MIDDLE;
-//            }
+        if (position == 0)
+            return VIEW_TYPE_HEADER;
 
-
-        }
-        if ("girl".equals(kukeuPersonList.get(position).getGender())) {
-            return VIEW_TYPE_GIRL;
+        if(position - 1 < kukeuPersonList.size()) {
+            if ("girl".equals(kukeuPersonList.get(position - 1).getGender())) {
+                return VIEW_TYPE_GIRL;
+            }
+            if ("boy".equals(kukeuPersonList.get(position - 1).getGender())) {
+                if (boyHeaderNum == -1) {
+                    boyHeaderNum = position;
+                    return VIEW_TYPE_MIDDLE;
+                }
+                if(boyHeaderNum == position)
+                    return VIEW_TYPE_MIDDLE;
+            }
         }
 
         return VIEW_TYPE_BOY;
@@ -129,7 +142,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return kukeuPersonList.size();
+        return kukeuPersonList.size() + 2;
     }
 
 
@@ -186,6 +199,24 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    class GirlViewHeader extends RecyclerView.ViewHolder {
+        TextView txtTitle;
+
+        public GirlViewHeader(View itemView) {
+            super(itemView);
+            this.txtTitle = (TextView) itemView.findViewById(R.id.girl_header_text);
+        }
+    }
+
+
+    private class BoyViewHeader extends RecyclerView.ViewHolder {
+        TextView txtTitle;
+
+        public BoyViewHeader(View itemView) {
+            super(itemView);
+            this.txtTitle = (TextView) itemView.findViewById(R.id.boy_header_text);
+        }
+    }
 
     public void setOnItemClickListener(ClickListener clickListener) {
         PersonListAdapter.clickListener = clickListener;
@@ -195,26 +226,4 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void onItemClick(int position, View v);
 
     }
-
-    public class HeaderViewHolder extends RecyclerView.ViewHolder {
-        final HeaderItemView headertemView;
-
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-
-            headertemView = (HeaderItemView) itemView;
-        }
-    }
-
-    public class MiddleViewHolder extends RecyclerView.ViewHolder {
-        final MiddleItemView middleItemView;
-
-        public MiddleViewHolder(View itemView) {
-            super(itemView);
-
-            middleItemView = (MiddleItemView) itemView;
-        }
-    }
-
-
 }

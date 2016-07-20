@@ -8,6 +8,7 @@
     android:padding="8dp">
 
         <TextView
+            android:id="@+id/boy_header_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="남자 명단"/>
