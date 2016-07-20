@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar vToolbar;
 
     @BindView(R.id.drawer_layout)
-    DrawerLayout vDrawerLyout;
+    DrawerLayout vDrawerLayout;
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(vToolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, vDrawerLyout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        vDrawerLyout.setDrawerListener(toggle);
+                this, vDrawerLayout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        vDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (vDrawerLyout.isDrawerOpen(GravityCompat.START)) {
-            vDrawerLyout.closeDrawer(GravityCompat.START);
+        if (vDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            vDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        vDrawerLyout.closeDrawer(GravityCompat.START);
+        vDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }
