@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -27,7 +28,7 @@ import rx.Observable;
 /**
  * Created by hyunji
  */
-public class MainFragment extends Fragment{
+public class MainFragment extends Fragment implements MainView{
     private final String[] nameList = {"정현지", "최현묵", "정고은", "이윤정", "이예진", "진유림", "김나연", "정지윤", "진아", "백설아", "순자", "미자", "혜자", "영자", "은자", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산", "최현묵", "하동현", "이강산2"};
     private final String[] jobList = {"개발자", "개발자", "회사원", "공무원", "경영", "개발자", "디자이너", "학생", "디자이너", "공연예술", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자", "개발자"};
     private final String[] genderList = {"girl", "girl", "boy", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy"};
@@ -97,5 +98,11 @@ public class MainFragment extends Fragment{
                 person.setId(al.getAndIncrement());
             }
         });
+    }
+
+    @Override
+    public void TextToast(String toast) {
+
+        Toast.makeText(getContext(),toast,Toast.LENGTH_LONG).show();
     }
 }

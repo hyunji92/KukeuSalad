@@ -1,8 +1,9 @@
 package hyunji.kukeusalad.fragment;
 
 /**
- * Created by hyunji on 16. 7. 21..
+ * Created by hyunji on 16. 7. 22..
  */
-public class MainView  {
+public interface MainView {
 
+    void TextToast(String toast);
 }
