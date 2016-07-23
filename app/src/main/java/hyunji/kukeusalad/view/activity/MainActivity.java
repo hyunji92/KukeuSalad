@@ -1,4 +1,4 @@
-package hyunji.kukeusalad.activity;
+package hyunji.kukeusalad.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
-import hyunji.kukeusalad.fragment.MainFragment;
+import hyunji.kukeusalad.view.fragment.MainFragment;
 
 /**
  * Created by hyunji

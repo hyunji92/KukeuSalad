@@ -1,4 +1,4 @@
-package hyunji.kukeusalad.fragment;
+package hyunji.kukeusalad.view.fragment;
 
 /**
  * Created by hyunji on 16. 7. 22..

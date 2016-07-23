@@ -5,6 +5,4 @@ package hyunji.kukeusalad.presenter;
  */
 public interface MainPresenter  {
 
-    void dummyLoad();
-    void dataLoad();
 }
