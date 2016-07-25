@@ -5,4 +5,8 @@ package hyunji.kukeusalad.presenter;
  */
 public interface MainPresenter  {
 
+    void loadDummyData();
+
+    void onItemsClicked(int position);
+
 }

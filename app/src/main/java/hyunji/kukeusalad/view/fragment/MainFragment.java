@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
@@ -64,7 +66,7 @@ public class MainFragment extends Fragment implements MainView{
         RealmResults<KukeuPerson> realmResults = realm.where(KukeuPerson.class).findAll();
 
         if (realmResults.isEmpty()) {
-            presenter.dummyLoad();
+            presenter.loadDummyData();
         }
 
 
@@ -76,5 +78,12 @@ public class MainFragment extends Fragment implements MainView{
     @Override
     public void TextToast(String toast) {
         Toast.makeText(getContext(),toast,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setItem(List<KukeuPerson> items) {
+        adapter.setData(items);
+        adapter.notifyDataSetChanged();
+
     }
 }

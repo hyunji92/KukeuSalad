@@ -21,8 +21,12 @@ public class RealmInteractorlmpl implements RealmInteractor {
 
     private Realm realm;
 
+    public RealmInteractorlmpl() {
+        realm = Realm.getDefaultInstance();
+    }
+
     @Override
-    public void realmDummyLoad() {
+    public void initRealmData() {
 
         // Realm 에 대한 presenter 다시빼서 작업
         AtomicLong al = new AtomicLong(1);
@@ -43,7 +47,7 @@ public class RealmInteractorlmpl implements RealmInteractor {
     }
 
     @Override
-    public void realmDataLoad(OnFinishedListner listner) {
+    public void realmDataLoad(OnFinishedListener listener) {
         Observable<RealmResults<KukeuPerson>> results = realm.where(KukeuPerson.class)
                 .findAllAsync()
                 .sort("id")
@@ -54,6 +58,11 @@ public class RealmInteractorlmpl implements RealmInteractor {
                 .subscribe(results1 -> {
                     Log.d("TEST", "onCreate: " + results1.size());
                     //adapter.setData(results1);
+                    if (results1.isEmpty()) {
+                        listener.onError();
+                    }else {
+                        listener.onFinished(results1);
+                    }
                 });
 
 

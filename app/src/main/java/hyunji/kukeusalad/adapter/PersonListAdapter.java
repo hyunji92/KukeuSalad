@@ -16,8 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
+import hyunji.kukeusalad.presenter.MainPresenter;
 import hyunji.kukeusalad.view.ListItemBoyView;
 import hyunji.kukeusalad.view.ListItemView;
+import hyunji.kukeusalad.view.fragment.MainView;
 import io.realm.Realm;
 
 /**
@@ -25,7 +27,7 @@ import io.realm.Realm;
  */
 
 
-public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements MainPresenter{
 
     private List<KukeuPerson> kukeuPersonList = new ArrayList<>();
 
@@ -154,6 +156,16 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         kukeuPersonList.clear();
         kukeuPersonList.addAll(data);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadDummyData() {
+
+    }
+
+    @Override
+    public void onItemsClicked(int position) {
+
     }
 
     public class BoyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
