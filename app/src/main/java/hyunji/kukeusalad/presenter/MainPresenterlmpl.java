@@ -41,6 +41,6 @@ public class MainPresenterlmpl implements MainPresenter ,RealmInteractor.OnFinis
     @Override
     public void onItemsClicked(int position) {
 
-
+       realmInteractor.realmDataDelete(position);
     }
 }

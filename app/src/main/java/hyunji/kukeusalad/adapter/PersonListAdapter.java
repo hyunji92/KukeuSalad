@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
 import hyunji.kukeusalad.presenter.MainPresenter;
+import hyunji.kukeusalad.presenter.RealmInteractor;
 import hyunji.kukeusalad.view.ListItemBoyView;
 import hyunji.kukeusalad.view.ListItemView;
 import hyunji.kukeusalad.view.fragment.MainView;
@@ -39,6 +40,8 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public final int VIEW_TYPE_BOY = 1;
     public final int VIEW_TYPE_HEADER = 2;
     public final int VIEW_TYPE_MIDDLE = 3;
+
+    private MainPresenter mainPresenter;
 
     int[] girlImgs = new int[] {R.drawable.girl_1, R.drawable.girl_2, R.drawable.girl_3, R.drawable.girl_4 ,R.drawable.girl_5};
     int[] boyImgs = new int[] {R.drawable.boy_1, R.drawable.boy_2, R.drawable.boy_3, R.drawable.boy_4 ,R.drawable.boy_5};
@@ -87,15 +90,9 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((GirlViewHolder) holder).listItemView.setData(kukeuPersonList.get(position - 1));
                 ((GirlViewHolder) holder).girlBtn.setOnClickListener(v -> {
                     //do button click work here
-                    long id = kukeuPersonList.get(position - 1).getId();
-                    KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+                    mainPresenter.onItemsClicked(position);
+                        boyHeaderNum = realm.where(KukeuPerson.class).equalTo("gender", "girl").findAll().size() + 1;
 
-                    realm.executeTransaction(realm1 -> {
-                        // 하나의 객체를 삭제합니다
-
-                        kukeuPerson.deleteFromRealm();
-                        boyHeaderNum = realm1.where(KukeuPerson.class).equalTo("gender", "girl").findAll().size() + 1;
-                    });
                 });
                 int girlImgId = (int)(Math.random() * girlImgs.length);
                 ((GirlViewHolder) holder).girlImg.setBackgroundResource(girlImgs[girlImgId]);

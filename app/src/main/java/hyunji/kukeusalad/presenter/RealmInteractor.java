@@ -10,6 +10,7 @@ import hyunji.kukeusalad.model.KukeuPerson;
 public interface RealmInteractor  {
 
     void initRealmData();
+    void realmDataDelete(int position);
     void realmDataLoad(OnFinishedListener listener);
 
     interface OnFinishedListener {

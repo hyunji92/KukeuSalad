@@ -2,6 +2,8 @@ package hyunji.kukeusalad.presenter;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import hyunji.kukeusalad.model.KukeuPerson;
@@ -20,6 +22,7 @@ public class RealmInteractorlmpl implements RealmInteractor {
     private final String[] genderList = {"girl", "girl", "boy", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "girl", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy", "boy"};
 
     private Realm realm;
+    private List<KukeuPerson> kukeuPersonList = new ArrayList<>();
 
     public RealmInteractorlmpl() {
         realm = Realm.getDefaultInstance();
@@ -44,6 +47,20 @@ public class RealmInteractorlmpl implements RealmInteractor {
         });
 
 
+    }
+
+    @Override
+    public void realmDataDelete(int position) {
+        //do button click work here
+        long id = kukeuPersonList.get(position - 1).getId();
+        KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+
+        realm.executeTransaction(realm1 -> {
+            // 하나의 객체를 삭제합니다
+
+            kukeuPerson.deleteFromRealm();
+
+        });
     }
 
     @Override
