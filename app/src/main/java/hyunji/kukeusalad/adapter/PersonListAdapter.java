@@ -101,15 +101,15 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case VIEW_TYPE_BOY:
                 ((BoyViewHolder) holder).listItemBoyView.setData(kukeuPersonList.get(position - 2));
                 ((BoyViewHolder) holder).boyBtn.setOnClickListener(v -> {
-
-                    //do button click work here
+                    mainPresenter.onItemsClicked(position);
+                   /* //do button click work here
                     long id = kukeuPersonList.get(position - 2).getId();
                     KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
 
                     realm.executeTransaction(realm1 -> {
                         // 하나의 객체를 삭제합니다
                         kukeuPerson.deleteFromRealm();
-                    });
+                    });*/
                 });
                 int boyImgId = (int)(Math.random() * boyImgs.length);
                 ((BoyViewHolder) holder).boyImg.setBackgroundResource(boyImgs[boyImgId]);
