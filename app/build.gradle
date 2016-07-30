@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "hyunji.kukeusalad"
         minSdkVersion 17
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -27,8 +27,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
 }
+
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -44,5 +51,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'com.google.code.gson:gson:2.2.4'
+    apply plugin: 'com.google.gms.google-services'
+    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.google.firebase:firebase-auth:9.0.0'
+
 
 }
+// ADD THIS AT THE BOTTOM
+apply plugin: 'com.google.gms.google-services'

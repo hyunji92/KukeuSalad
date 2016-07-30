@@ -50,17 +50,31 @@ public class RealmInteractorlmpl implements RealmInteractor {
     }
 
     @Override
-    public void realmDataDelete(int position) {
-        //do button click work here
-        long id = kukeuPersonList.get(position - 1).getId();
-        KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+    public void realmDataDelete(int position, int type) {
+        Log.d("TTTTT2", "Positon: "  +  position);
+        Log.d("TTTTT2", "type: "  +  type);
+        if (type == 0) {
+            long id = kukeuPersonList.get(position -1).getId();
+            Log.d("TTTTT3", "id: "  +  id);
+            KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
 
-        realm.executeTransaction(realm1 -> {
-            // 하나의 객체를 삭제합니다
+            Log.d("TTTTT4", "Positon: "  +  position);
+            realm.executeTransaction(realm1 -> {
+                // 하나의 객체를 삭제합니다
 
-            kukeuPerson.deleteFromRealm();
+                kukeuPerson.deleteFromRealm();
+            });
 
-        });
+        } else if (type == 1) {
+            //do button click work here
+            long id = kukeuPersonList.get(position - 2).getId();
+            KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+
+            realm.executeTransaction(realm1 -> {
+                // 하나의 객체를 삭제합니다
+                kukeuPerson.deleteFromRealm();
+            });
+        }
     }
 
     @Override
@@ -77,7 +91,7 @@ public class RealmInteractorlmpl implements RealmInteractor {
                     //adapter.setData(results1);
                     if (results1.isEmpty()) {
                         listener.onError();
-                    }else {
+                    } else {
                         listener.onFinished(results1);
                     }
                 });

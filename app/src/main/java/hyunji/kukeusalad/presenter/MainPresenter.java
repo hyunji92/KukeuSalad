@@ -7,6 +7,6 @@ public interface MainPresenter  {
 
     void loadDummyData();
 
-    void onItemsClicked(int position);
+    void onItemsClicked(int position,int type);
 
 }

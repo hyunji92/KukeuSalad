@@ -2,6 +2,7 @@ package hyunji.kukeusalad.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,9 @@ import butterknife.ButterKnife;
 import hyunji.kukeusalad.R;
 import hyunji.kukeusalad.model.KukeuPerson;
 import hyunji.kukeusalad.presenter.MainPresenter;
-import hyunji.kukeusalad.presenter.RealmInteractor;
+import hyunji.kukeusalad.presenter.MainPresenterlmpl;
 import hyunji.kukeusalad.view.ListItemBoyView;
 import hyunji.kukeusalad.view.ListItemView;
-import hyunji.kukeusalad.view.fragment.MainView;
 import io.realm.Realm;
 
 /**
@@ -28,7 +28,7 @@ import io.realm.Realm;
  */
 
 
-public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements MainPresenter{
+public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<KukeuPerson> kukeuPersonList = new ArrayList<>();
 
@@ -43,14 +43,15 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private MainPresenter mainPresenter;
 
-    int[] girlImgs = new int[] {R.drawable.girl_1, R.drawable.girl_2, R.drawable.girl_3, R.drawable.girl_4 ,R.drawable.girl_5};
-    int[] boyImgs = new int[] {R.drawable.boy_1, R.drawable.boy_2, R.drawable.boy_3, R.drawable.boy_4 ,R.drawable.boy_5};
+    int[] girlImgs = new int[]{R.drawable.girl_1, R.drawable.girl_2, R.drawable.girl_3, R.drawable.girl_4, R.drawable.girl_5};
+    int[] boyImgs = new int[]{R.drawable.boy_1, R.drawable.boy_2, R.drawable.boy_3, R.drawable.boy_4, R.drawable.boy_5};
 
     private Context context;
 
     public PersonListAdapter(Context context) {
 
         this.context = context;
+        this.mainPresenter = new MainPresenterlmpl();
     }
 
     private static ClickListener clickListener;
@@ -90,28 +91,46 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((GirlViewHolder) holder).listItemView.setData(kukeuPersonList.get(position - 1));
                 ((GirlViewHolder) holder).girlBtn.setOnClickListener(v -> {
                     //do button click work here
-                    mainPresenter.onItemsClicked(position);
-                        boyHeaderNum = realm.where(KukeuPerson.class).equalTo("gender", "girl").findAll().size() + 1;
+                    //int pos = position +1;
+
+                    Log.d("TTTTT", "Positon: " + position);
+                    //TODO : 일단 쓰지않는다 이렇게 코딩해놓은거로는 분리가 힘들듯. 정보 넣고 position 보냈다고행각했지만 realmInterator 가면
+                    //TODO : 그위치에 0번을 빼올려는데 0번째 아이템이 없으므로 인덱스에러 뿜뿜.
+                    // mainPresenter.onItemsClicked(position , VIEW_TYPE_GIRL);
+
+                    long id = kukeuPersonList.get(position - 1).getId();
+                    Log.d("TTTTT3", "id: " + id);
+                    KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
+
+                    Log.d("TTTTT4", "Positon: " + position);
+                    realm.executeTransaction(realm1 -> {
+                        // 하나의 객체를 삭제합니다
+
+                        kukeuPerson.deleteFromRealm();
+                    });
+
+                    boyHeaderNum = realm.where(KukeuPerson.class).equalTo("gender", "girl").findAll().size() + 1;
 
                 });
-                int girlImgId = (int)(Math.random() * girlImgs.length);
+                int girlImgId = (int) (Math.random() * girlImgs.length);
                 ((GirlViewHolder) holder).girlImg.setBackgroundResource(girlImgs[girlImgId]);
 
                 break;
             case VIEW_TYPE_BOY:
                 ((BoyViewHolder) holder).listItemBoyView.setData(kukeuPersonList.get(position - 2));
                 ((BoyViewHolder) holder).boyBtn.setOnClickListener(v -> {
-                    mainPresenter.onItemsClicked(position);
-                   /* //do button click work here
+                    //mainPresenter.onItemsClicked(position, VIEW_TYPE_BOY);
+                    //do button click work here
                     long id = kukeuPersonList.get(position - 2).getId();
                     KukeuPerson kukeuPerson = realm.where(KukeuPerson.class).equalTo("id", id).findFirst();
 
                     realm.executeTransaction(realm1 -> {
                         // 하나의 객체를 삭제합니다
                         kukeuPerson.deleteFromRealm();
-                    });*/
+                    });
+
                 });
-                int boyImgId = (int)(Math.random() * boyImgs.length);
+                int boyImgId = (int) (Math.random() * boyImgs.length);
                 ((BoyViewHolder) holder).boyImg.setBackgroundResource(boyImgs[boyImgId]);
 
                 break;
@@ -125,7 +144,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (position == 0)
             return VIEW_TYPE_HEADER;
 
-        if(position - 1 < kukeuPersonList.size()) {
+        if (position - 1 < kukeuPersonList.size()) {
             if ("girl".equals(kukeuPersonList.get(position - 1).getGender())) {
                 return VIEW_TYPE_GIRL;
             }
@@ -134,7 +153,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     boyHeaderNum = position;
                     return VIEW_TYPE_MIDDLE;
                 }
-                if(boyHeaderNum == position)
+                if (boyHeaderNum == position)
                     return VIEW_TYPE_MIDDLE;
             }
         }
@@ -155,15 +174,6 @@ public class PersonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    @Override
-    public void loadDummyData() {
-
-    }
-
-    @Override
-    public void onItemsClicked(int position) {
-
-    }
 
     public class BoyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ListItemBoyView listItemBoyView;

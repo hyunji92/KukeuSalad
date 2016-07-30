@@ -18,6 +18,9 @@ public class MainPresenterlmpl implements MainPresenter ,RealmInteractor.OnFinis
         this.realmInteractor = new RealmInteractorlmpl();
     }
 
+    public MainPresenterlmpl() {
+        this.realmInteractor = new RealmInteractorlmpl();
+    }
 
 
     @Override
@@ -39,8 +42,8 @@ public class MainPresenterlmpl implements MainPresenter ,RealmInteractor.OnFinis
     }
 
     @Override
-    public void onItemsClicked(int position) {
+    public void onItemsClicked(int position, int type) {
 
-       realmInteractor.realmDataDelete(position);
+       realmInteractor.realmDataDelete(position ,type);
     }
 }
