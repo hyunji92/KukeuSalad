@@ -19,7 +19,7 @@ public class DataService {
 
     // private static 로 선언.
     private static DataService instance = new DataService();
-    private static MyPreferenceManager pref = MyApplication.getInstance().getPrefManager();
+    //private static MyPreferenceManager pref = MyApplication.getInstance().getPrefManager();
 
     // 조회 method
     private static class Singleton {
