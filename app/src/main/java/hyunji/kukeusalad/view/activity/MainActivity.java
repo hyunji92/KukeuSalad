@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.BindView;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout vDrawerLayout;
 
     @BindView(R.id.nav_view)
-    NavigationView navigationView;
+    NavigationView vNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, vDrawerLayout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         vDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+        vNavigationView.setNavigationItemSelectedListener(this);
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -58,29 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {// Handle navigation view item clicks here.
@@ -103,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             default:
         }
-
 
         vDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
