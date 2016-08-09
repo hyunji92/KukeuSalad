@@ -63,6 +63,7 @@
             android:layout_marginTop="20dip"
             android:background="@color/colorAccent"
             android:text="@string/btn_login"
+            android:visibility="gone"
             android:textColor="@android:color/black" />
 
         <Button
@@ -71,6 +72,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="#D32F2F"
+            android:text="@string/btn_google"
+            android:textColor="@android:color/black" />
+        <Button
+            android:id="@+id/btn_facebook_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorPrimaryDark2"
             android:text="@string/btn_google"
             android:textColor="@android:color/black" />
 
