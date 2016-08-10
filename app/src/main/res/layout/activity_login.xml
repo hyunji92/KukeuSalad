@@ -74,7 +74,8 @@
             android:background="#D32F2F"
             android:text="@string/btn_google"
             android:textColor="@android:color/black" />
-        <Button
+
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/btn_facebook_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

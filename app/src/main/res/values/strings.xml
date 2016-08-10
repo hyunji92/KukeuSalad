@@ -35,4 +35,5 @@
 
     <string name="btn_google">google Login</string>
     <string name="btn_facebool">facebook Login</string>
+    <string name="loading">Loading…</string>
 </resources>
